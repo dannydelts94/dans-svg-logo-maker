@@ -1,35 +1,23 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateLogo = require('./lib/shapes');
+const { Circle, Triangle, Square } = require('./lib/shapes');
+
+function writeToFile(fileName, answers) {
+let svgString = 
+}
 
 const parameters = [
     {
         type: 'input',
         name: 'logoText',
         message: 'Please enter text (up to three characters) you would like your logo to contain.',
-        validate: logoTextInput => {
-            if (logoTextInput) {
-                return true;
-            } else {
-                console.log('Please enter text for your logo!');
-                return false;
-            }
-
-        }
+  
     },
     {
         type: 'input',
         name: 'textColor',
         message: 'What color would you like the text to be?',
-        validate: textColorInput => {
-            if (textColorInput) {
-                return true;
-            } else {
-                console.log('Please enter a color keyword!');
-                return false;
-            }
 
-        }
     },
     {
         type: 'list',
@@ -46,28 +34,19 @@ const parameters = [
         type: 'input',
         name: 'shapeColor',
         message: 'What color would you like the shape to be?',
-        validate: shapeColorInput => {
-            if (shapeColorInput) {
-                return true;
-            } else {
-                console.log('Please enter a color keyword!');
-                return false;
-            }
 
-        }
     },
 ]
+.then((answers) => {
+    if (answers.logoText.legnth > 3) {
+        console.log('Please enter text no greater than 3 characters long!');
+        init();
+    } else {
 
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, err => {
-        if (err) throw new Error(err);
+        writeToFile('logo.svg', answers);
+    }
+    });
 
-        console.log('Generated logo.svg');
-    })
-
-}
-
-// TODO: Create a function to initialize app
 function init() {
 
 
