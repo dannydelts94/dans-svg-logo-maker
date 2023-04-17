@@ -2,8 +2,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generateLogo = require('./lib/shapes');
 
-// TODO: Create an array of questions for user input
-const questions = [
+const parameters = [
     {
         type: 'input',
         name: 'logoText',
@@ -58,12 +57,12 @@ const questions = [
         }
     },
 ]
-// TODO: Create a function to write README file
+
 function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, err => {
         if (err) throw new Error(err);
 
-        console.log('Your README was created!');
+        console.log('Generated logo.svg');
     })
 
 }
@@ -74,9 +73,9 @@ function init() {
 
     console.log(`Please respond to the following prompts to generate your README!`);
   
-    inquirer.prompt(questions)
-    .then(readmeData => {
-writeToFile('/Users/danielrescigno/pen_bootcamp/challenges/dans-readme-generator/output/readme.md' , generateMarkdown(readmeData))
+    inquirer.prompt(parameters)
+    .then(logoData => {
+writeToFile('/Users/danielrescigno/pen_bootcamp/challenges/dans-svg-logo-maker/examples', generateLogo(logoData))
     })
 };
 
