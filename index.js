@@ -19,7 +19,6 @@ if (answers.shapeList === 'Circle') {
     svgShapeString += `<rect x="73" y="40" width="160" height="160" fill="${answers.shapeColor}"/>`;
 }
 svgShapeString += `<text x="150" y="130" text-anchor="middle" font-size="40" fill="${answers.textColor}">${answers.logoText}</text>`;
-svgShapeString += "</g>";
 svgShapeString +=  "</svg>"
 
 fs.writeFile(fileName, svgShapeString, (err) => {
