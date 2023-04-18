@@ -5,8 +5,7 @@ const { Circle, Triangle, Square } = require('./lib/shapes');
 function writeToFile(fileName, answers) {
 let svgShapeString = '';
 svgShapeString = 
-'<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="200"></svg>';
-svgShapeString += '<g>';
+'<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">';
 svgShapeString += `${answers.shapeList}`;
 let shapeSelection;
 if (answers.shapeList === 'Circle') {
@@ -19,10 +18,18 @@ if (answers.shapeList === 'Circle') {
     shapeSelection = new Square();
     svgShapeString += `<rect x="73" y="40" width="160" height="160" fill="${answers.shapeColor}"/>`;
 }
+svgShapeString += `<text x="150" y="130" text-anchor="middle" font-size="40" fill="${answers.textColor}">${answers.logoText}</text>`;
+svgShapeString += "</g>";
+svgShapeString +=  "</svg>"
+
+fs.writeFile(fileName, svgShapeString, (err) => {
+    err ? console.log(err) : console.log('Generated logo.svg');
+  });
 }
+function parameters () {
 
-
-const parameters = [
+inquirer
+.prompt([
     {
         type: 'input',
         name: 'logoText',
@@ -52,7 +59,7 @@ const parameters = [
         message: 'What color would you like the shape to be?',
 
     },
-]
+])
 .then((answers) => {
     if (answers.logoText.legnth > 3) {
         console.log('Please enter text no greater than 3 characters long!');
@@ -62,18 +69,6 @@ const parameters = [
         writeToFile('logo.svg', answers);
     }
     });
-
-function init() {
-
-
-    console.log(`Please respond to the following prompts to generate your README!`);
-  
-    inquirer.prompt(parameters)
-    .then(logoData => {
-writeToFile('/Users/danielrescigno/pen_bootcamp/challenges/dans-svg-logo-maker/examples', generateLogo(logoData))
-    })
-};
-
-// Function call to initialize app
-init();
+}
+parameters();
 
